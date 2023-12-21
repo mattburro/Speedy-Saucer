@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://b0b640h0fjxoo"]
+
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_wn8pn"]
+[ext_resource type="Texture2D" uid="uid://c3y1xq2sjwj6l" path="res://assets/darkPurple.png" id="2_11ppt"]
+[ext_resource type="PackedScene" uid="uid://cl6y61pixpj4g" path="res://scenes/player.tscn" id="2_yc410"]
+[ext_resource type="PackedScene" uid="uid://bcsyk1onhr2st" path="res://scenes/maze.tscn" id="4_au02c"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6kq3u"]
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_uqc1n"]
+font_size = 24
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Level1" type="Node2D"]
+script = ExtResource("1_wn8pn")
+
+[node name="Graphics" type="Node" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Graphics"]
+layer = -1
+
+[node name="Background" type="TextureRect" parent="Graphics/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_11ppt")
+stretch_mode = 1
+
+[node name="StartLabel" type="Label" parent="Graphics"]
+z_index = 1
+offset_left = 525.0
+offset_top = 226.0
+offset_right = 620.0
+offset_bottom = 274.0
+text = "START"
+label_settings = SubResource("LabelSettings_6kq3u")
+
+[node name="EndLabel" type="Label" parent="Graphics"]
+z_index = 1
+offset_left = 1282.0
+offset_top = 9.0
+offset_right = 1377.0
+offset_bottom = 57.0
+text = "END"
+label_settings = SubResource("LabelSettings_6kq3u")
+
+[node name="RulesLabel" type="Label" parent="Graphics"]
+z_index = 1
+offset_left = 365.0
+offset_top = 32.0
+offset_right = 777.0
+offset_bottom = 217.0
+text = "Rules:
+- Use arrows keys or WASD to move
+- Go from the START to the END
+- You will go back to the start if you
+  leave the maze!"
+label_settings = SubResource("LabelSettings_uqc1n")
+
+[node name="Maze" parent="." instance=ExtResource("4_au02c")]
+position = Vector2(571, 359)
+scale = Vector2(1.74275, 1.74275)
+
+[node name="Player" parent="." instance=ExtResource("2_yc410")]
+z_index = 2
+position = Vector2(570, 321)
+
+[connection signal="body_exited" from="Maze" to="." method="_on_maze_body_exited"]
